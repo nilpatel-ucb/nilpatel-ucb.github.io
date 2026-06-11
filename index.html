@@ -288,9 +288,43 @@ h2{
   background:var(--accent);
 }
 
-/* scroll-reveal (respects reduced motion below) */
-.reveal{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
+/* scroll-reveal: elements float into place (respects reduced motion below) */
+.reveal{
+  opacity:0;
+  transform:translateY(34px) scale(.985);
+  transition:opacity .7s cubic-bezier(.22,.9,.3,1), transform .7s cubic-bezier(.22,.9,.3,1);
+  transition-delay:var(--d, 0s);
+  will-change:opacity, transform;
+}
 .reveal.in{ opacity:1; transform:none; }
+
+/* ---------- finish-line celebration ---------- */
+#celebration{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:60;
+  overflow:hidden;
+}
+.confetti{
+  position:absolute;
+  top:-4vh;
+  width:9px; height:14px;
+  border-radius:2px;
+  opacity:0;
+  animation:confetti-fall var(--dur,3s) var(--delay,0s) cubic-bezier(.25,.6,.45,1) forwards;
+}
+@keyframes confetti-fall{
+  0%  { opacity:1; transform:translate3d(0,0,0) rotateZ(0deg) rotateX(0deg); }
+  100%{ opacity:0; transform:translate3d(var(--drift,0px),105vh,0) rotateZ(var(--spin,540deg)) rotateX(720deg); }
+}
+.confetti-emoji{
+  position:absolute;
+  top:-4vh;
+  font-size:15px;
+  line-height:1;
+  opacity:0;
+  animation:confetti-fall var(--dur,3s) var(--delay,0s) cubic-bezier(.25,.6,.45,1) forwards;
+}
 
 /* ---------- finish / contact ---------- */
 footer{
@@ -323,6 +357,7 @@ footer .fine{ margin-top:40px; }
   .reveal{ opacity:1; transform:none; transition:none; }
   .card{ transition:none; }
   #car{ transition:none; }
+  .confetti, .confetti-emoji{ animation:none; display:none; }
 }
 </style>
 </head>
@@ -559,6 +594,9 @@ footer .fine{ margin-top:40px; }
   </div><!-- /wrap -->
 </div><!-- /page -->
 
+<!-- Finish-line celebration overlay (filled by JS when the user reaches the end) -->
+<div id="celebration" aria-hidden="true"></div>
+
 <script>
 (function(){
   "use strict";
@@ -648,16 +686,92 @@ footer .fine{ margin-top:40px; }
     resizeTimer = setTimeout(buildTrack, 120);
   });
 
-  /* Scroll-reveal for cards/paragraphs */
+  /* ---------- float-in: tag all content elements as reveals ---------- */
+  var floatSelectors = [
+    '.hero .avatar', '.hero .avatar-fallback', '.hero .eyebrow', '.hero h1',
+    '.hero .tagline', '.hero .creds', '.hero .socials', '.hero .scroll-hint',
+    'section .eyebrow', 'section h2', 'section .section-sub', 'section p',
+    'section .card',
+    'footer .checker', 'footer .eyebrow', 'footer h2', 'footer .section-sub',
+    'footer .email', 'footer .fine'
+  ];
+  document.querySelectorAll(floatSelectors.join(',')).forEach(function(el){
+    el.classList.add('reveal');
+  });
+
+  /* stagger siblings: each reveal inside the same parent waits a beat longer */
+  var groups = {};
+  document.querySelectorAll('.reveal').forEach(function(el){
+    var key = el.closest('section, footer, header') === null ? 'misc'
+            : (el.closest('.grid') ? 'grid-' + Array.prototype.indexOf.call(document.querySelectorAll('.grid'), el.closest('.grid'))
+            : 'sec-' + Array.prototype.indexOf.call(document.querySelectorAll('section, footer, header'), el.closest('section, footer, header')));
+    groups[key] = (groups[key] || 0);
+    el.style.setProperty('--d', (groups[key] * 0.09).toFixed(2) + 's');
+    groups[key]++;
+  });
+
+  /* Scroll-reveal for all tagged elements */
   if (!reduced && 'IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- finish-line celebration ---------- */
+  var celebrated = false;
+  var stage = document.getElementById('celebration');
+
+  function celebrate(){
+    if (celebrated || reduced) return;
+    celebrated = true;
+
+    var colors = ['#e10600', '#141414', '#f2b705', '#ffffff', '#6f6f6c'];
+    var emojis = ['🏆', '🥇', '🍾'];
+
+    function fallProps(el){
+      el.style.left = (Math.random() * 100) + '%';
+      el.style.setProperty('--dur',   (2.4 + Math.random() * 2.2) + 's');
+      el.style.setProperty('--delay', (Math.random() * 1.2) + 's');
+      el.style.setProperty('--drift', ((Math.random() - 0.5) * 220) + 'px');
+      el.style.setProperty('--spin',  (360 + Math.random() * 720) + 'deg');
+    }
+
+    /* confetti shower */
+    for (var i = 0; i < 110; i++){
+      var c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.background = colors[(Math.random() * colors.length) | 0];
+      c.style.width  = (6 + Math.random() * 6) + 'px';
+      c.style.height = (10 + Math.random() * 8) + 'px';
+      fallProps(c);
+      stage.appendChild(c);
+    }
+
+    /* trophy / medal / champagne emojis, same size and timing as confetti */
+    for (var j = 0; j < 45; j++){
+      var e = document.createElement('div');
+      e.className = 'confetti-emoji';
+      e.textContent = emojis[(Math.random() * emojis.length) | 0];
+      fallProps(e);
+      stage.appendChild(e);
+    }
+
+    /* clean up after the show */
+    setTimeout(function(){ stage.innerHTML = ''; }, 6500);
+  }
+
+  if ('IntersectionObserver' in window){
+    var finishIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ celebrate(); finishIO.disconnect(); }
+      });
+    }, { threshold: 0.6 });
+    finishIO.observe(document.getElementById('contact'));
   }
 
   window.addEventListener('load', buildTrack);
