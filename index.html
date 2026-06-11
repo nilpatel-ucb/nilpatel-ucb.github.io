@@ -359,6 +359,34 @@ h2{
   padding:3px 7px;
 }
 
+/* ---------- compact coursework list ---------- */
+.course-list{
+  display:flex; flex-direction:column;
+}
+.course{
+  display:grid;
+  grid-template-columns:96px 1fr;
+  gap:18px;
+  padding:16px 0;
+  border-top:1px solid var(--line);
+  align-items:baseline;
+}
+.course:last-child{ border-bottom:1px solid var(--line); }
+.course-term{
+  padding-top:2px;
+  color:var(--accent);
+}
+.course-main h3{
+  font-weight:700; font-size:1rem; letter-spacing:-.01em;
+  margin-bottom:3px;
+}
+.course-main p{
+  font-size:.9rem; color:var(--muted); max-width:60ch;
+}
+@media (max-width: 560px){
+  .course{ grid-template-columns:1fr; gap:4px; padding:14px 0; }
+}
+
 /* scroll-reveal: elements float into place (respects reduced motion below) */
 .reveal{
   opacity:0;
@@ -382,11 +410,14 @@ h2{
   width:9px; height:14px;
   border-radius:2px;
   opacity:0;
-  animation:confetti-fall var(--dur,3s) var(--delay,0s) cubic-bezier(.25,.6,.45,1) forwards;
+  transform:translate3d(0,0,0);
+  will-change:transform, opacity;
+  backface-visibility:hidden;
+  animation:confetti-fall var(--dur,3s) var(--delay,0s) linear forwards;
 }
 @keyframes confetti-fall{
-  0%  { opacity:1; transform:translate3d(0,0,0) rotateZ(0deg) rotateX(0deg); }
-  100%{ opacity:0; transform:translate3d(var(--drift,0px),105vh,0) rotateZ(var(--spin,540deg)) rotateX(720deg); }
+  0%  { opacity:1; transform:translate3d(0,0,0) rotate(0deg); }
+  100%{ opacity:0; transform:translate3d(var(--drift,0px),105vh,0) rotate(var(--spin,540deg)); }
 }
 .confetti-emoji{
   position:absolute;
@@ -394,7 +425,10 @@ h2{
   font-size:15px;
   line-height:1;
   opacity:0;
-  animation:confetti-fall var(--dur,3s) var(--delay,0s) cubic-bezier(.25,.6,.45,1) forwards;
+  transform:translate3d(0,0,0);
+  will-change:transform, opacity;
+  backface-visibility:hidden;
+  animation:confetti-fall var(--dur,3s) var(--delay,0s) linear forwards;
 }
 
 /* ---------- finish / contact ---------- */
@@ -624,63 +658,71 @@ footer .fine{ margin-top:40px; }
       <h2>Coursework</h2>
       <p class="section-sub">Eight UC Berkeley courses, taken from Fall 2024 onward alongside a full high school load.</p>
 
-      <div class="grid">
-        <!-- EDIT ME: replace placeholder courses + terms with your actual list -->
-        <article class="card reveal">
-          <span class="num">CW / 01 · Fall 2024</span>
-          <h3>CS168 — Internet Architecture &amp; Protocols</h3>
-          <p>TCP/IP, routing (distance vector, link-state, BGP), DNS, link layer. Built a TCP implementation from scratch on the POX framework.</p>
-          <div class="tags"><span>Networking</span><span>Python</span></div>
-        </article>
+      <div class="course-list">
+        <!-- EDIT ME: one .course row per class — semester · title · short description -->
+        <div class="course reveal">
+          <div class="course-term mono">Fall 2024</div>
+          <div class="course-main">
+            <h3>CS168 — Internet Architecture &amp; Protocols</h3>
+            <p>TCP/IP, routing, BGP, and DNS — built a TCP implementation from scratch on POX.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 02 · Fall 2024</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Fall 2024</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 03 · Spring 2025</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Spring 2025</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 04 · Spring 2025</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Spring 2025</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 05 · Fall 2025</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Fall 2025</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 06 · Fall 2025</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Fall 2025</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 07 · Spring 2026</span>
-          <h3>CS188 — Introduction to Artificial Intelligence</h3>
-          <p>Search, MDPs, Q-learning, Bayesian networks, probabilistic inference, and neural networks (CNNs, RNNs, attention) in PyTorch.</p>
-          <div class="tags"><span>AI / ML</span><span>PyTorch</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Spring 2026</div>
+          <div class="course-main">
+            <h3>CS188 — Introduction to Artificial Intelligence</h3>
+            <p>Search, MDPs, Q-learning, Bayes nets, and neural networks in PyTorch.</p>
+          </div>
+        </div>
 
-        <article class="card reveal">
-          <span class="num">CW / 08 · Spring 2026</span>
-          <h3>Course Name — Placeholder</h3>
-          <p>Short description of the course and what you built or learned.</p>
-          <div class="tags"><span>Topic</span></div>
-        </article>
+        <div class="course reveal">
+          <div class="course-term mono">Spring 2026</div>
+          <div class="course-main">
+            <h3>Course Title — Placeholder</h3>
+            <p>One-line description of the course.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -837,6 +879,11 @@ footer .fine{ margin-top:40px; }
     var colors = ['#e10600', '#141414', '#f2b705', '#ffffff', '#6f6f6c'];
     var emojis = ['🏆', '🥇', '🍾'];
 
+    /* fewer particles on small/touch screens to keep the animation smooth */
+    var isMobile = window.matchMedia('(max-width: 700px)').matches;
+    var confettiCount = isMobile ? 50 : 110;
+    var emojiCount    = isMobile ? 20 : 45;
+
     function fallProps(el){
       el.style.left = (Math.random() * 100) + '%';
       el.style.setProperty('--dur',   (2.4 + Math.random() * 2.2) + 's');
@@ -845,25 +892,29 @@ footer .fine{ margin-top:40px; }
       el.style.setProperty('--spin',  (360 + Math.random() * 720) + 'deg');
     }
 
+    var frag = document.createDocumentFragment();
+
     /* confetti shower */
-    for (var i = 0; i < 110; i++){
+    for (var i = 0; i < confettiCount; i++){
       var c = document.createElement('div');
       c.className = 'confetti';
       c.style.background = colors[(Math.random() * colors.length) | 0];
       c.style.width  = (6 + Math.random() * 6) + 'px';
       c.style.height = (10 + Math.random() * 8) + 'px';
       fallProps(c);
-      stage.appendChild(c);
+      frag.appendChild(c);
     }
 
     /* trophy / medal / champagne emojis, same size and timing as confetti */
-    for (var j = 0; j < 45; j++){
+    for (var j = 0; j < emojiCount; j++){
       var e = document.createElement('div');
       e.className = 'confetti-emoji';
       e.textContent = emojis[(Math.random() * emojis.length) | 0];
       fallProps(e);
-      stage.appendChild(e);
+      frag.appendChild(e);
     }
+
+    stage.appendChild(frag);
 
     /* clean up after the show */
     setTimeout(function(){ stage.innerHTML = ''; }, 6500);
