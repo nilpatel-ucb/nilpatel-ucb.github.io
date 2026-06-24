@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Patel — Portfolio</title>
 <meta name="description" content="Portfolio — hardware and software projects." />
-
+ 
 <!-- Fonts: Archivo (display + body), IBM Plex Mono (timing-screen labels) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+ 
 <style>
 /* ============================================================
    EDIT ME: colors live here. Keep it minimal — one accent only.
@@ -28,7 +28,7 @@
 @media (min-width: 700px){
   :root{ --gutter: 96px; }
 }
-
+ 
 *{ box-sizing:border-box; margin:0; padding:0; }
 html{ scroll-behavior:smooth; }
 body{
@@ -39,7 +39,7 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-
+ 
 /* ---------- layout: centered column = track gutter + content ---------- */
 .page{
   position:relative;
@@ -54,7 +54,7 @@ body{
 @media (min-width: 700px){
   .wrap{ padding:0 32px 0 24px; }
 }
-
+ 
 /* ---------- sticky section nav ("pit wall") ---------- */
 .site-nav{
   position:sticky;
@@ -91,10 +91,10 @@ body{
   font-weight:500;
   padding-right:4px;
 }
-
+ 
 /* anchors land below the sticky nav */
 section, footer, header.hero{ scroll-margin-top:calc(var(--navh) + 12px); }
-
+ 
 /* ---------- track svg (drawn by JS, sits behind everything) ---------- */
 #track-svg{
   position:absolute;
@@ -109,7 +109,7 @@ section, footer, header.hero{ scroll-margin-top:calc(var(--navh) + 12px); }
 #track-center{ stroke:var(--paper); stroke-width:1.5; fill:none; stroke-dasharray:6 8; }
 #track-raced{ stroke:var(--ink); stroke-width:10; fill:none; stroke-linecap:round; }
 #car{ will-change:transform; }
-
+ 
 /* ---------- mono "timing screen" labels ---------- */
 .mono{
   font-family:'IBM Plex Mono', monospace;
@@ -125,7 +125,7 @@ section, footer, header.hero{ scroll-margin-top:calc(var(--navh) + 12px); }
 .eyebrow .tick{
   display:inline-block; width:22px; height:2px; background:var(--accent);
 }
-
+ 
 /* ---------- hero ---------- */
 header.hero{
   min-height:calc(92vh - var(--navh));
@@ -191,7 +191,7 @@ h1 .accent-dot{ color:var(--accent); }
 .socials a:hover, .socials a:focus-visible{ border-color:var(--accent); color:var(--accent); }
 a:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
 .scroll-hint{ margin-top:48px; }
-
+ 
 /* ---------- sections ---------- */
 section{
   position:relative; z-index:1;
@@ -213,7 +213,7 @@ h2{
   max-width:62ch;
   margin-bottom:16px;
 }
-
+ 
 /* ---------- project cards ---------- */
 .grid{
   display:grid;
@@ -267,7 +267,7 @@ h2{
   transition:border-color .15s, color .15s;
 }
 .card a.link:hover{ color:var(--accent); border-color:var(--accent); }
-
+ 
 /* coursework list inside cards */
 .card ul{
   list-style:none;
@@ -287,7 +287,108 @@ h2{
   width:8px; height:2px;
   background:var(--accent);
 }
-
+ 
+/* ---------- recommendations carousel ("team radio") ---------- */
+.recs{ position:relative; }
+.recs-viewport{
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  outline-offset:3px;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.recs-viewport:hover{ border-color:var(--ink); }
+.recs-viewport:focus-visible{ outline:2px solid var(--accent); }
+.recs-track{
+  display:flex;
+  transition:transform .5s cubic-bezier(.22,.9,.3,1);
+  will-change:transform;
+}
+.rec-card{
+  flex:0 0 100%;
+  min-width:0;
+  padding:36px 26px 30px;
+  display:flex; flex-direction:column; gap:20px;
+  min-height:240px;
+}
+@media (min-width: 700px){
+  .rec-card{ padding:46px 48px 38px; }
+}
+.rec-quote{
+  position:relative;
+  font-size:clamp(1.05rem, 2.6vw, 1.4rem);
+  line-height:1.5;
+  letter-spacing:-.01em;
+  color:var(--ink);
+}
+.rec-quote::before{
+  content:"\201C";
+  position:absolute;
+  left:-4px; top:-30px;
+  font-size:64px; line-height:1;
+  color:var(--accent);
+  font-weight:800;
+}
+.rec-quote p{ padding-top:20px; }
+.rec-meta{
+  display:flex; align-items:center; gap:14px;
+  margin-top:auto;
+  flex-wrap:wrap;
+}
+.rec-meta .who{ display:flex; flex-direction:column; gap:3px; }
+.rec-meta .name{ font-weight:700; font-size:1rem; letter-spacing:-.01em; }
+.rec-meta .role{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px; letter-spacing:.06em; color:var(--muted);
+}
+.rec-meta a.li{
+  margin-left:auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink); text-decoration:none;
+  border:1px solid var(--line); border-radius:999px;
+  padding:7px 13px;
+  white-space:nowrap;
+  transition:border-color .15s, color .15s, background .15s;
+}
+.rec-meta a.li:hover, .rec-meta a.li:focus-visible{
+  color:var(--paper); background:var(--ink); border-color:var(--ink);
+}
+ 
+/* controls: prev / next + dots, styled like the timing screen */
+.recs-controls{
+  display:flex; align-items:center; gap:12px;
+  margin-top:18px;
+}
+.recs-btn{
+  width:42px; height:42px;
+  display:flex; align-items:center; justify-content:center;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:50%;
+  color:var(--ink);
+  cursor:pointer;
+  font-size:18px; line-height:1;
+  transition:border-color .15s, color .15s, transform .15s;
+}
+.recs-btn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+.recs-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+.recs-dots{ display:flex; gap:8px; }
+.recs-dot{
+  width:9px; height:9px; border-radius:50%;
+  background:var(--line);
+  border:none; padding:0; cursor:pointer;
+  transition:background .2s, transform .2s;
+}
+.recs-dot.active{ background:var(--accent); transform:scale(1.25); }
+.recs-count{ margin-left:auto; }
+ 
+@media (prefers-reduced-motion: reduce){
+  .recs-track{ transition:none; }
+  .recs-btn:hover{ transform:none; }
+}
+ 
 /* ---------- experience timeline ---------- */
 .timeline{
   display:flex; flex-direction:column;
@@ -358,7 +459,7 @@ h2{
   border-radius:4px;
   padding:3px 7px;
 }
-
+ 
 /* ---------- compact coursework list ---------- */
 .course-list{
   display:flex; flex-direction:column;
@@ -386,7 +487,7 @@ h2{
 @media (max-width: 560px){
   .course{ grid-template-columns:1fr; gap:4px; padding:14px 0; }
 }
-
+ 
 /* scroll-reveal: elements float into place (respects reduced motion below) */
 .reveal{
   opacity:0;
@@ -396,7 +497,7 @@ h2{
   will-change:opacity, transform;
 }
 .reveal.in{ opacity:1; transform:none; }
-
+ 
 /* ---------- finish-line celebration ---------- */
 #celebration{
   position:fixed; inset:0;
@@ -404,7 +505,7 @@ h2{
   z-index:60;
   overflow:hidden;
 }
-
+ 
 /* ---------- lap time readout ---------- */
 .lap-time{
   margin:-2px 0 18px;
@@ -423,22 +524,22 @@ h2{
   60% { opacity:1; transform:translateY(0) scale(1.04); }
   100%{ opacity:1; transform:none; }
 }
-
+ 
 /* ---------- dynamic hover: 3D tilt cards, magnetic links, lively chips ---------- */
 .tiltable{
   transform-style:preserve-3d;
   will-change:transform;
 }
 .tilt-wrap{ perspective:900px; }
-
+ 
 /* cards get an eager label stretch on hover (tilt handled in JS) */
 .card:hover .num{ letter-spacing:.3em; }
 .card .num{ transition:letter-spacing .25s ease; }
-
+ 
 /* tags fill in on hover */
 .tags span{ transition:background .15s ease, color .15s ease, border-color .15s ease; }
 .tags span:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
-
+ 
 /* hero credential chips pop */
 .creds span{ transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .creds span:hover{
@@ -446,13 +547,13 @@ h2{
   border-color:var(--accent);
   box-shadow:0 4px 10px rgba(0,0,0,.07);
 }
-
+ 
 /* course rows slide and light up */
 .course{ transition:transform .2s ease, background .2s ease; border-radius:6px; }
 .course:hover{ transform:translateX(8px); background:#fff; }
 .course:hover h3{ color:var(--accent); }
 .course-main h3{ transition:color .2s ease; }
-
+ 
 /* nav links get a sliding underline */
 .site-nav a{ position:relative; }
 .site-nav a::after{
@@ -466,7 +567,7 @@ h2{
   transition:transform .22s cubic-bezier(.22,.9,.3,1);
 }
 .site-nav a:hover::after{ transform:scaleX(1); }
-
+ 
 /* checker bar invites a replay */
 .checker{ cursor:pointer; transition:transform .2s ease; }
 .checker:hover{ transform:scale(1.04) rotate(-1deg); }
@@ -496,7 +597,7 @@ h2{
   backface-visibility:hidden;
   animation:confetti-fall var(--dur,3s) var(--delay,0s) linear forwards;
 }
-
+ 
 /* ---------- finish / contact ---------- */
 footer{
   position:relative; z-index:1;
@@ -521,7 +622,7 @@ footer .email{
   border-bottom:2px solid var(--accent);
 }
 footer .fine{ margin-top:40px; }
-
+ 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
@@ -535,9 +636,9 @@ footer .fine{ margin-top:40px; }
 </style>
 </head>
 <body>
-
+ 
 <div class="page">
-
+ 
   <!-- The track + car. Drawn/positioned by the script at the bottom. -->
   <svg id="track-svg" aria-hidden="true">
     <defs>
@@ -561,7 +662,7 @@ footer .fine{ margin-top:40px; }
         <!-- brake-light glow at the rear — shown when scrolling up -->
         <rect id="brake-glow" x="1" y="-5" width="16" height="7" rx="3"
               fill="var(--accent)" opacity="0" filter="url(#brake-blur)"/>
-
+ 
         <rect x="0"   y="3"  width="4.5" height="7" rx="1.5" fill="#141414"/>
         <rect x="13.5" y="3"  width="4.5" height="7" rx="1.5" fill="#141414"/>
         <rect x="0"   y="20" width="4.5" height="7" rx="1.5" fill="#141414"/>
@@ -573,9 +674,9 @@ footer .fine{ margin-top:40px; }
       </g>
     </g>
   </svg>
-
+ 
   <div class="wrap">
-
+ 
     <!-- ================= STICKY SECTION NAV ================= -->
     <nav class="site-nav" aria-label="Sections">
       <span class="flag" aria-hidden="true">⏱</span>
@@ -583,25 +684,26 @@ footer .fine{ margin-top:40px; }
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#hardware">Hardware</a>
+      <a href="#recs">Recs</a>
       <a href="#software">Software</a>
       <a href="#coursework">Coursework</a>
       <a href="#contact">Contact</a>
     </nav>
-
+ 
     <!-- ================= HERO / DRIVER PROFILE ================= -->
     <header class="hero" id="top">
       <!-- EDIT ME: swap the fallback for your photo:
            <img class="avatar" src="profile.jpg" alt="Your name"> -->
       <div class="avatar-fallback">P</div>
-
+ 
       <div class="eyebrow"><span class="tick"></span><span class="mono">Driver profile</span></div>
-
-      <h1>Your Name<span class="accent-dot">.</span></h1>
+ 
+      <h1>Nil Patel<span class="accent-dot">.</span></h1>
       <p class="tagline">
         <!-- EDIT ME: one-line intro -->
         Student engineer building things at the intersection of hardware, software, and markets.
       </p>
-
+ 
       <!-- EDIT ME: credentials -->
       <div class="creds">
         <span>ERHS · Class of 20XX</span>
@@ -609,18 +711,18 @@ footer .fine{ margin-top:40px; }
         <span>UC Berkeley CS188</span>
         <span>Formula Electric</span>
       </div>
-
+ 
       <!-- EDIT ME: socials -->
       <nav class="socials" aria-label="Social links">
         <a href="https://github.com/nilpatel-ucb" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="https://www.linkedin.com/in/patel-nil/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="http://nil_patel@berkeley.edu">Email ↗</a>
+        <a href="nil_patel@berkeley.edu">Email ↗</a>
         <a href="https://drive.google.com/drive/home?dmr=1&ec=wgc-drive-hero-goto">Résumé ↗</a>
       </nav>
-
+ 
       <div class="scroll-hint mono">Lights out — scroll to start ↓</div>
     </header>
-
+ 
     <!-- ================= ABOUT ================= -->
     <section id="about" data-sector>
       <div class="eyebrow"><span class="tick"></span><span class="mono">Formation lap — About</span></div>
@@ -632,20 +734,20 @@ footer .fine{ margin-top:40px; }
         team, writing software that solves real problems, and studying how markets work.
       </p>
     </section>
-
+ 
     <!-- ================= EXPERIENCE ================= -->
     <section id="experience" data-sector>
       <div class="eyebrow"><span class="tick"></span><span class="mono">Pit crew — Experience</span></div>
       <h2>Experience</h2>
       <p class="section-sub">Internships and roles where I've shipped real work.</p>
-
+ 
       <div class="timeline">
         <!-- EDIT ME: duplicate an .xp block for each internship -->
         <article class="xp reveal">
-          <div class="xp-when mono">Summer 2025</div>
+          <div class="xp-when mono">Summer 20XX</div>
           <div class="xp-body">
-            <h3>Software Engineer Intern</h3>
-            <div class="xp-org">AsyncHealth · Berkeley, CA</div>
+            <h3>Role / Title</h3>
+            <div class="xp-org">Company or Organization · Location</div>
             <ul>
               <li>What you worked on and the impact it had.</li>
               <li>A tool you built, a problem you solved, or a result you drove.</li>
@@ -653,7 +755,7 @@ footer .fine{ margin-top:40px; }
             <div class="tags"><span>Skill</span><span>Tool</span></div>
           </div>
         </article>
-
+ 
         <article class="xp reveal">
           <div class="xp-when mono">20XX – 20XX</div>
           <div class="xp-body">
@@ -668,13 +770,13 @@ footer .fine{ margin-top:40px; }
         </article>
       </div>
     </section>
-
+ 
     <!-- ================= SECTOR 1: HARDWARE ================= -->
     <section id="hardware" data-sector>
       <div class="eyebrow"><span class="tick"></span><span class="mono">Sector 01 — Hardware</span></div>
       <h2>Hardware</h2>
       <p class="section-sub">Physical builds, vehicle systems, and product design.</p>
-
+ 
       <div class="grid">
         <!-- EDIT ME: duplicate this card for each project -->
         <article class="card reveal">
@@ -684,7 +786,7 @@ footer .fine{ margin-top:40px; }
           <div class="tags"><span>EV</span><span>CAD</span><span>Testing</span></div>
           <a class="link" href="#" target="_blank" rel="noopener">View project →</a>
         </article>
-
+ 
         <article class="card reveal">
           <span class="num">HW / 02</span>
           <h3>Magnetic Sandwich Wrapper</h3>
@@ -694,13 +796,80 @@ footer .fine{ margin-top:40px; }
         </article>
       </div>
     </section>
-
+ 
+    <!-- ================= TEAM RADIO: RECOMMENDATIONS ================= -->
+    <section id="recs" data-sector>
+      <div class="eyebrow"><span class="tick"></span><span class="mono">Team radio — Recommendations</span></div>
+      <h2>Recommendations</h2>
+      <p class="section-sub">What teachers and mentors have said about working with me.</p>
+ 
+      <div class="recs reveal">
+        <div class="recs-viewport" id="recs-vp" tabindex="0" role="group"
+             aria-roledescription="carousel" aria-label="Recommendations carousel">
+          <div class="recs-track" id="recs-track">
+ 
+            <!-- EDIT ME: duplicate a .rec-card for each recommendation.
+                 - quote text goes in <p>
+                 - name + role/organization under .who
+                 - paste the person's LinkedIn URL in the <a class="li" href="..."> -->
+            <figure class="rec-card">
+              <blockquote class="rec-quote">
+                <p>Paste the recommendation here, in the person's own words. A sentence or two reads best inside a carousel slide.</p>
+              </blockquote>
+              <figcaption class="rec-meta">
+                <div class="who">
+                  <span class="name">Steven Chan</span>
+                  <span class="role">CTO · AsyncHealth</span>
+                </div>
+                <a class="li" href="https://www.linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn ↗</a>
+              </figcaption>
+            </figure>
+ 
+            <figure class="rec-card">
+              <blockquote class="rec-quote">
+                <p>Paste the recommendation here, in the person's own words. A sentence or two reads best inside a carousel slide.</p>
+              </blockquote>
+              <figcaption class="rec-meta">
+                <div class="who">
+                  <span class="name">First Last</span>
+                  <span class="role">Title · School or Organization</span>
+                </div>
+                <a class="li" href="https://www.linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn ↗</a>
+              </figcaption>
+            </figure>
+ 
+            <figure class="rec-card">
+              <blockquote class="rec-quote">
+                <p>Paste the recommendation here, in the person's own words. A sentence or two reads best inside a carousel slide.</p>
+              </blockquote>
+              <figcaption class="rec-meta">
+                <div class="who">
+                  <span class="name">First Last</span>
+                  <span class="role">Title · School or Organization</span>
+                </div>
+                <a class="li" href="https://www.linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn ↗</a>
+              </figcaption>
+            </figure>
+ 
+          </div>
+        </div>
+ 
+        <!-- prev / next + dots + slide counter. Dots are generated by JS. -->
+        <div class="recs-controls">
+          <button class="recs-btn" id="recs-prev" type="button" aria-label="Previous recommendation">‹</button>
+          <button class="recs-btn" id="recs-next" type="button" aria-label="Next recommendation">›</button>
+          <div class="recs-dots" id="recs-dots" aria-label="Choose recommendation"></div>
+          <span class="recs-count mono" id="recs-count">01 / 01</span>
+        </div>
+      </div>
+    </section>
+ 
     <!-- ================= SECTOR 2: SOFTWARE ================= -->
     <section id="software" data-sector>
       <div class="eyebrow"><span class="tick"></span><span class="mono">Sector 02 — Software</span></div>
       <h2>Software</h2>
       <p class="section-sub">Apps and tools, from desktop utilities to financial analysis.</p>
-
+ 
       <div class="grid">
         <article class="card reveal">
           <span class="num">SW / 01</span>
@@ -709,7 +878,7 @@ footer .fine{ margin-top:40px; }
           <div class="tags"><span>Python</span><span>PyQt6</span><span>ffmpeg</span></div>
           <a class="link" href="#" target="_blank" rel="noopener">View project →</a>
         </article>
-
+ 
         <article class="card reveal">
           <span class="num">SW / 02</span>
           <h3>Pacific Financial Analyzer</h3>
@@ -717,7 +886,7 @@ footer .fine{ margin-top:40px; }
           <div class="tags"><span>Flask</span><span>Python</span><span>LLM</span></div>
           <a class="link" href="#" target="_blank" rel="noopener">View project →</a>
         </article>
-
+ 
         <article class="card reveal">
           <span class="num">SW / 03</span>
           <h3>Mechanics Lien Tracker</h3>
@@ -725,7 +894,7 @@ footer .fine{ margin-top:40px; }
           <div class="tags"><span>React</span><span>JavaScript</span></div>
           <a class="link" href="#" target="_blank" rel="noopener">View project →</a>
         </article>
-
+ 
         <article class="card reveal">
           <span class="num">SW / 04</span>
           <h3>TCP Implementation (POX)</h3>
@@ -735,13 +904,13 @@ footer .fine{ margin-top:40px; }
         </article>
       </div>
     </section>
-
+ 
     <!-- ================= SECTOR 3: COURSEWORK ================= -->
     <section id="coursework" data-sector>
       <div class="eyebrow"><span class="tick"></span><span class="mono">Sector 03 — Coursework · UC Berkeley</span></div>
       <h2>Coursework</h2>
       <p class="section-sub">Eight UC Berkeley courses, taken from Fall 2024 onward alongside a full high school load.</p>
-
+ 
       <div class="course-list">
         <!-- EDIT ME: one .course row per class — semester · title · short description -->
         <div class="course reveal">
@@ -751,7 +920,7 @@ footer .fine{ margin-top:40px; }
             <p>TCP/IP, routing, BGP, and DNS — built a TCP implementation from scratch on POX.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Fall 2024</div>
           <div class="course-main">
@@ -759,7 +928,7 @@ footer .fine{ margin-top:40px; }
             <p>One-line description of the course.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Spring 2025</div>
           <div class="course-main">
@@ -767,7 +936,7 @@ footer .fine{ margin-top:40px; }
             <p>One-line description of the course.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Spring 2025</div>
           <div class="course-main">
@@ -775,7 +944,7 @@ footer .fine{ margin-top:40px; }
             <p>One-line description of the course.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Fall 2025</div>
           <div class="course-main">
@@ -783,7 +952,7 @@ footer .fine{ margin-top:40px; }
             <p>One-line description of the course.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Fall 2025</div>
           <div class="course-main">
@@ -791,7 +960,7 @@ footer .fine{ margin-top:40px; }
             <p>One-line description of the course.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Spring 2026</div>
           <div class="course-main">
@@ -799,7 +968,7 @@ footer .fine{ margin-top:40px; }
             <p>Search, MDPs, Q-learning, Bayes nets, and neural networks in PyTorch.</p>
           </div>
         </div>
-
+ 
         <div class="course reveal">
           <div class="course-term mono">Spring 2026</div>
           <div class="course-main">
@@ -809,7 +978,7 @@ footer .fine{ margin-top:40px; }
         </div>
       </div>
     </section>
-
+ 
     <!-- ================= FINISH / CONTACT ================= -->
     <footer id="contact" data-sector>
       <div class="checker" aria-hidden="true"></div>
@@ -821,32 +990,32 @@ footer .fine{ margin-top:40px; }
       <a class="email" href="mailto:you@email.com">you@email.com</a>
       <p class="fine mono">© <span id="year"></span> Your Name · Built by hand, raced on GitHub Pages</p>
     </footer>
-
+ 
   </div><!-- /wrap -->
 </div><!-- /page -->
-
+ 
 <!-- Finish-line celebration overlay (filled by JS when the user reaches the end) -->
 <div id="celebration" aria-hidden="true"></div>
-
+ 
 <script>
 (function(){
   "use strict";
   document.getElementById('year').textContent = new Date().getFullYear();
-
+ 
   var svg     = document.getElementById('track-svg');
   var base    = document.getElementById('track-base');
   var raced   = document.getElementById('track-raced');
   var center  = document.getElementById('track-center');
   var car     = document.getElementById('car');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+ 
   var pathLen = 0;
-
+ 
   function gutterWidth(){
     return parseFloat(getComputedStyle(document.documentElement)
       .getPropertyValue('--gutter')) || 56;
   }
-
+ 
   /* Build a vertical track through the gutter with a chicane (S-curve)
      at the start of every [data-sector] section. */
   function buildTrack(){
@@ -857,17 +1026,17 @@ footer .fine{ margin-top:40px; }
     svg.setAttribute('width', gw);
     svg.setAttribute('height', docH);
     svg.setAttribute('viewBox', '0 0 ' + gw + ' ' + docH);
-
+ 
     var yStart = Math.round(window.innerHeight * 0.35);
     var yEnd   = docH - 120;
-
+ 
     var marks = [];
     document.querySelectorAll('[data-sector]').forEach(function(el){
       var y = el.offsetTop + 60;
       if (y > yStart + 160 && y < yEnd - 160) marks.push(y);
     });
     marks.sort(function(a,b){ return a-b; });
-
+ 
     var d = 'M ' + x + ' ' + yStart;
     var side = 1;
     marks.forEach(function(y){
@@ -878,7 +1047,7 @@ footer .fine{ margin-top:40px; }
       side *= -1;
     });
     d += ' L ' + x + ' ' + yEnd;
-
+ 
     base.setAttribute('d', d);
     raced.setAttribute('d', d);
     center.setAttribute('d', d);
@@ -886,33 +1055,33 @@ footer .fine{ margin-top:40px; }
     raced.style.strokeDasharray = pathLen;
     update();
   }
-
+ 
   var targetT  = 0;   // where the car should be (from scroll)
   var currentT = 0;   // where the car actually is (eased)
   var raf      = null;
-
+ 
   var speedLines = document.getElementById('speed-lines');
   var brakeGlow  = document.getElementById('brake-glow');
   var fx         = 0; // eased effect intensity 0..1
-
+ 
   function computeTarget(){
     var max = document.documentElement.scrollHeight - window.innerHeight;
     targetT = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     if (reduced) targetT = 0;
   }
-
+ 
   function render(t){
     if (!pathLen) return;
     var len = t * pathLen;
     raced.style.strokeDashoffset = pathLen - len;
-
+ 
     var p  = raced.getPointAtLength(len);
     var p2 = raced.getPointAtLength(Math.min(pathLen, len + 2));
     var ang = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI - 90;
     car.setAttribute('transform',
       'translate(' + p.x.toFixed(2) + ',' + p.y.toFixed(2) + ') rotate(' + ang.toFixed(2) + ')');
   }
-
+ 
   /* speed lines when moving fast; brake glow when reversing (scrolling up) */
   var lastDir = 1;
   function applyFx(targetFx, reversing){
@@ -922,14 +1091,14 @@ footer .fine{ margin-top:40px; }
     if (speedLines) speedLines.setAttribute('opacity', (lastDir > 0 ? fx : 0).toFixed(3));
     if (brakeGlow)  brakeGlow.setAttribute('opacity',  (lastDir < 0 ? fx : 0).toFixed(3));
   }
-
+ 
   /* ease currentT toward targetT each frame — smooths out jumpy mobile scroll */
   function tick(){
     var diff = targetT - currentT;
     if (Math.abs(diff) > 0.0008) lastDir = diff > 0 ? 1 : -1;
     var speed = Math.min(1, Math.abs(diff) * 60); // scroll speed → 0..1
     applyFx(speed, diff < 0);
-
+ 
     if (Math.abs(diff) < 0.0004 && fx === 0){
       currentT = targetT;
       render(currentT);
@@ -940,29 +1109,29 @@ footer .fine{ margin-top:40px; }
     render(currentT);
     raf = requestAnimationFrame(tick);
   }
-
+ 
   function startLoop(){
     if (raf == null) raf = requestAnimationFrame(tick);
   }
-
+ 
   function update(){          // called after track rebuild — snap into place
     computeTarget();
     currentT = targetT;
     applyFx(0, false);
     render(currentT);
   }
-
+ 
   window.addEventListener('scroll', function(){
     computeTarget();
     startLoop();
   }, { passive:true });
-
+ 
   var resizeTimer;
   window.addEventListener('resize', function(){
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(buildTrack, 120);
   });
-
+ 
   /* ---------- float-in: tag all content elements as reveals ---------- */
   var floatSelectors = [
     '.hero .avatar', '.hero .avatar-fallback', '.hero .eyebrow', '.hero h1',
@@ -975,7 +1144,7 @@ footer .fine{ margin-top:40px; }
   document.querySelectorAll(floatSelectors.join(',')).forEach(function(el){
     el.classList.add('reveal');
   });
-
+ 
   /* stagger siblings: each reveal inside the same parent waits a beat longer */
   var groups = {};
   document.querySelectorAll('.reveal').forEach(function(el){
@@ -986,7 +1155,7 @@ footer .fine{ margin-top:40px; }
     el.style.setProperty('--d', (groups[key] * 0.09).toFixed(2) + 's');
     groups[key]++;
   });
-
+ 
   /* Scroll-reveal for all tagged elements */
   if (!reduced && 'IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
@@ -998,23 +1167,108 @@ footer .fine{ margin-top:40px; }
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
   }
-
+ 
+  /* ---------- recommendations carousel ---------- */
+  (function initRecs(){
+    var track = document.getElementById('recs-track');
+    if (!track) return;
+    var cards    = Array.prototype.slice.call(track.children);
+    var total    = cards.length;
+    var index    = 0;
+    var prevBtn  = document.getElementById('recs-prev');
+    var nextBtn  = document.getElementById('recs-next');
+    var dotsWrap = document.getElementById('recs-dots');
+    var countEl  = document.getElementById('recs-count');
+    var vp       = document.getElementById('recs-vp');
+    if (total === 0) return;
+ 
+    /* build one dot per slide */
+    var dots = [];
+    for (var i = 0; i < total; i++){
+      var dot = document.createElement('button');
+      dot.className = 'recs-dot' + (i === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Go to recommendation ' + (i + 1));
+      (function(n){ dot.addEventListener('click', function(){ go(n); }); })(i);
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    }
+ 
+    function pad(n){ return String(n).length < 2 ? '0' + n : '' + n; }
+ 
+    function go(n){
+      index = (n % total + total) % total;  // wrap around at both ends
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === index); });
+      if (countEl) countEl.textContent = pad(index + 1) + ' / ' + pad(total);
+      cards.forEach(function(c, i){ c.setAttribute('aria-hidden', i === index ? 'false' : 'true'); });
+    }
+ 
+    if (prevBtn) prevBtn.addEventListener('click', function(){ go(index - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ go(index + 1); });
+ 
+    /* arrow keys when the carousel has focus */
+    if (vp) vp.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowLeft'){ e.preventDefault(); go(index - 1); }
+      else if (e.key === 'ArrowRight'){ e.preventDefault(); go(index + 1); }
+    });
+ 
+    /* swipe (touch / pointer) */
+    var startX = null;
+    if (vp){
+      vp.addEventListener('pointerdown', function(e){ startX = e.clientX; });
+      window.addEventListener('pointerup', function(e){
+        if (startX === null) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 40) go(dx < 0 ? index + 1 : index - 1);
+        startX = null;
+      });
+    }
+ 
+    /* float-in: each card's name, title/organization, and LinkedIn button rise
+       into place using the same reveal animation + speed as the rest of the site */
+    var metaReveal = [];
+    cards.forEach(function(card){
+      ['.name', '.role', '.li'].forEach(function(sel, i){
+        var el = card.querySelector(sel);
+        if (!el) return;
+        el.classList.add('reveal');
+        el.style.setProperty('--d', (i * 0.09).toFixed(2) + 's');  // 0.09s stagger, matches site
+        metaReveal.push(el);
+      });
+    });
+    function revealMeta(){ metaReveal.forEach(function(el){ el.classList.add('in'); }); }
+ 
+    if (!reduced && 'IntersectionObserver' in window){
+      var metaIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ revealMeta(); metaIO.disconnect(); }
+        });
+      }, { threshold: 0.12 });
+      if (vp) metaIO.observe(vp);
+    } else {
+      revealMeta();  // reduced motion / no observer → show immediately
+    }
+ 
+    go(0);
+  })();
+ 
   /* ---------- finish-line celebration ---------- */
   var celebrated = false;
   var stage = document.getElementById('celebration');
-
+ 
   function celebrate(){
     if (celebrated || reduced) return;
     celebrated = true;
-
+ 
     var colors = ['#e10600', '#141414', '#f2b705', '#ffffff', '#6f6f6c'];
     var emojis = ['🏆', '🥇', '🍾'];
-
+ 
     /* fewer particles on small/touch screens to keep the animation smooth */
     var isMobile = window.matchMedia('(max-width: 700px)').matches;
     var confettiCount = isMobile ? 50 : 110;
     var emojiCount    = isMobile ? 20 : 45;
-
+ 
     function fallProps(el){
       el.style.left = (Math.random() * 100) + '%';
       el.style.setProperty('--dur',   (2.4 + Math.random() * 2.2) + 's');
@@ -1022,9 +1276,9 @@ footer .fine{ margin-top:40px; }
       el.style.setProperty('--drift', ((Math.random() - 0.5) * 220) + 'px');
       el.style.setProperty('--spin',  (360 + Math.random() * 720) + 'deg');
     }
-
+ 
     var frag = document.createDocumentFragment();
-
+ 
     /* confetti shower */
     for (var i = 0; i < confettiCount; i++){
       var c = document.createElement('div');
@@ -1035,7 +1289,7 @@ footer .fine{ margin-top:40px; }
       fallProps(c);
       frag.appendChild(c);
     }
-
+ 
     /* trophy / medal / champagne emojis, same size and timing as confetti */
     for (var j = 0; j < emojiCount; j++){
       var e = document.createElement('div');
@@ -1044,13 +1298,13 @@ footer .fine{ margin-top:40px; }
       fallProps(e);
       frag.appendChild(e);
     }
-
+ 
     stage.appendChild(frag);
-
+ 
     /* clean up after the show */
     setTimeout(function(){ stage.innerHTML = ''; }, 6500);
   }
-
+ 
   if ('IntersectionObserver' in window){
     var finishIO = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
@@ -1059,27 +1313,27 @@ footer .fine{ margin-top:40px; }
     }, { threshold: 0.6 });
     finishIO.observe(document.getElementById('contact'));
   }
-
+ 
   /* ---------- lap timer: first scroll → finish line ---------- */
   var lapStart   = null;
   var lapStopped = false;
   var lapEl      = document.getElementById('lap-time');
   var lapValue   = document.getElementById('lap-value');
-
+ 
   function formatLap(ms){
     var m   = Math.floor(ms / 60000);
     var s   = Math.floor((ms % 60000) / 1000);
     var mil = Math.floor(ms % 1000);
     return m + ':' + String(s).padStart(2, '0') + '.' + String(mil).padStart(3, '0');
   }
-
+ 
   window.addEventListener('scroll', function startLap(){
     if (lapStart === null && window.scrollY > 4){
       lapStart = performance.now();
       window.removeEventListener('scroll', startLap);
     }
   }, { passive:true });
-
+ 
   function stopLap(){
     if (lapStopped || !lapEl) return;
     lapStopped = true;
@@ -1088,22 +1342,22 @@ footer .fine{ margin-top:40px; }
     lapEl.hidden = false;
     lapEl.classList.add('pop');
   }
-
+ 
   /* ---------- 3D tilt on cards (fine pointers only) ---------- */
   var finePointer = window.matchMedia('(pointer:fine)').matches;
   if (!reduced && finePointer){
-    document.querySelectorAll('.card, .xp-body').forEach(function(el){
+    document.querySelectorAll('.card, .xp-body, .recs-viewport').forEach(function(el){
       el.classList.add('tiltable');
       if (el.parentElement) el.parentElement.classList.add('tilt-wrap');
       var tiltRaf = null;
-
+ 
       el.addEventListener('pointerenter', function(){
         /* the reveal float-in leaves a slow, delayed transform transition on the
            element — swap it for a snappy one so the tilt tracks the cursor */
         el.style.transition = 'transform .12s ease';
         el.style.transitionDelay = '0s';
       });
-
+ 
       el.addEventListener('pointermove', function(ev){
         if (tiltRaf) return;
         tiltRaf = requestAnimationFrame(function(){
@@ -1117,14 +1371,14 @@ footer .fine{ margin-top:40px; }
             ' rotateY(' + ( px * 7).toFixed(2) + 'deg)';
         });
       });
-
+ 
       el.addEventListener('pointerleave', function(){
         el.style.transition = 'transform .3s cubic-bezier(.22,.9,.3,1)';
         el.style.transform = '';
       });
     });
   }
-
+ 
   /* ---------- checker bar: click to replay the celebration ---------- */
   var checker = document.querySelector('.checker');
   if (checker){
@@ -1134,10 +1388,11 @@ footer .fine{ margin-top:40px; }
       celebrate();
     });
   }
-
+ 
   window.addEventListener('load', buildTrack);
   buildTrack();
 })();
 </script>
 </body>
 </html>
+ 
