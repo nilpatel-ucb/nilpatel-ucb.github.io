@@ -389,6 +389,53 @@ h2{
   .recs-btn:hover{ transform:none; }
 }
 
+/* ---------- photo carousel under the intro (image tiles) ---------- */
+.gallery{
+  position:relative;
+  margin-top:28px;
+  /* tiles per view + gap — read by the carousel script. */
+  --per:1;
+  --gallery-gap:16px;
+}
+@media (min-width: 700px){ .gallery{ --per:2; } }
+@media (min-width: 760px){ .gallery{ --per:3; } }
+
+.gallery-viewport{
+  overflow:hidden;            /* fallback for old browsers */
+  overflow:clip;              /* enables the clip margin below */
+  overflow-clip-margin:14px;  /* room for the hover lift/tilt */
+  outline-offset:3px;
+}
+.gallery-viewport:focus-visible{ outline:2px solid var(--accent); }
+.gallery-track{
+  display:flex;
+  gap:var(--gallery-gap);
+  transition:transform .5s cubic-bezier(.22,.9,.3,1);
+  will-change:transform;
+}
+.gallery-tile{
+  flex:0 0 calc((100% - (var(--per) - 1) * var(--gallery-gap)) / var(--per));
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.gallery-tile:hover{ border-color:var(--ink); }
+.gallery-img{
+  width:100%;
+  aspect-ratio:4 / 3;
+  object-fit:cover;
+  display:block;
+  background:
+    repeating-linear-gradient(45deg, #efefec 0 10px, #f7f7f5 10px 20px);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .gallery-track{ transition:none; }
+}
+
 /* ---------- experience timeline ---------- */
 .timeline{
   display:flex; flex-direction:column;
@@ -694,11 +741,11 @@ footer .fine{ margin-top:40px; }
     <header class="hero" id="top">
       <!-- EDIT ME: swap the fallback for your photo:
            <img class="avatar" src="profile.jpg" alt="Your name"> -->
-      <div class="avatar-fallback">P</div>
+           <img class="avatar" src="Images/pfp.jpeg" alt="Nil Patel">
 
       <div class="eyebrow"><span class="tick"></span><span class="mono">Driver profile</span></div>
 
-      <h1>Your Name<span class="accent-dot">.</span></h1>
+      <h1>Nil Patel<span class="accent-dot">.</span></h1>
       <p class="tagline">
         <!-- EDIT ME: one-line intro -->
         Student engineer building things at the intersection of hardware, software, and markets.
@@ -706,18 +753,18 @@ footer .fine{ margin-top:40px; }
 
       <!-- EDIT ME: credentials -->
       <div class="creds">
-        <span>ERHS · Class of 20XX</span>
-        <span>Norco College — Concurrent</span>
-        <span>UC Berkeley CS188</span>
-        <span>Formula Electric</span>
+        <span>UC Berkeley · Class of 2028</span>
+        <span>Electrical Engineering and Computer Science</span>
+        <!-- <span>UC Berkeley CS188</span>
+        <span>Formula Electric</span> -->
       </div>
 
       <!-- EDIT ME: socials -->
       <nav class="socials" aria-label="Social links">
         <a href="https://github.com/nilpatel-ucb" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="https://www.linkedin.com/in/patel-nil/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="nil_patel@berkeley.edu">Email ↗</a>
-        <a href="https://drive.google.com/drive/home?dmr=1&ec=wgc-drive-hero-goto">Résumé ↗</a>
+        <a href="mailto:nil_patel@berkeley.edu">Email ↗</a>
+        <a href="Nil_Patel_Resume.pdf">Résumé ↗</a>
       </nav>
 
       <div class="scroll-hint mono">Lights out — scroll to start ↓</div>
@@ -729,10 +776,59 @@ footer .fine{ margin-top:40px; }
       <h2>A quick intro</h2>
       <!-- EDIT ME: bio -->
       <p class="reveal">
-        I'm a high school student who treats every project like a race weekend: research,
-        build, test, iterate. Most of my time goes into engineering for a Formula Electric
-        team, writing software that solves real problems, and studying how markets work.
+        I'm a Berkeley student who treats every project like a race weekend: research,
+        build, test, iterate. Most of my time goes into learning new engineering concepts, 
+        writing software and solving real problems. On my free time, I enjoy working out, 
+        hanging out with friends, and working on cars. 
       </p>
+
+      <!-- ================= PHOTO CAROUSEL (image tiles) ================= -->
+      <div class="gallery reveal">
+        <div class="gallery-viewport" id="gallery-vp" tabindex="0" role="group"
+             aria-roledescription="carousel" aria-label="Photo carousel">
+          <div class="gallery-track" id="gallery-track">
+
+            <!-- EDIT ME: duplicate a .gallery-tile for each photo.
+                 Use the web-friendly .jpg files (browsers can't show .HEIC). -->
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_2028.jpg"" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_1675.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_0566.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_3118.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_3230.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_4548.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_0128.jpg" alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_1747.jpg " alt="" loading="lazy">
+            </figure>
+            <figure class="gallery-tile">
+              <img class="gallery-img" src="Images/web-img_6830.jpg" alt="" loading="lazy">
+            </figure>
+
+          </div>
+        </div>
+
+        <!-- prev / next + dots + page counter. Dots are generated by JS. -->
+        <div class="recs-controls">
+          <button class="recs-btn" id="gallery-prev" type="button" aria-label="Previous photos">‹</button>
+          <button class="recs-btn" id="gallery-next" type="button" aria-label="Next photos">›</button>
+          <div class="recs-dots" id="gallery-dots" aria-label="Choose photo page"></div>
+          <span class="recs-count mono" id="gallery-count">01 / 01</span>
+        </div>
+      </div>
     </section>
 
     <!-- ================= EXPERIENCE ================= -->
@@ -744,28 +840,45 @@ footer .fine{ margin-top:40px; }
       <div class="timeline">
         <!-- EDIT ME: duplicate an .xp block for each internship -->
         <article class="xp reveal">
-          <div class="xp-when mono">Summer 20XX</div>
+          <div class="xp-when mono">Summer 2025</div>
           <div class="xp-body">
-            <h3>Role / Title</h3>
-            <div class="xp-org">Company or Organization · Location</div>
+            <h3>Software Engineer</h3>
+            <div class="xp-org">AsyncHealth · Berkeley, CA</div>
             <ul>
-              <li>What you worked on and the impact it had.</li>
-              <li>A tool you built, a problem you solved, or a result you drove.</li>
+              <li>Engineered a local integration server in JavaScript, Node.js, and Express using the FHIR API and PKCE-based OAuth2 to securely serialize/deserialize FHIR R4 JSON resources from Epic's EHR sandbox into the AsyncHealth web app.</li>
+              <li>Collaborated with Dr. Pawan Jindal, CEO of Darena Health, on FHIR protocol best practices and translated findings into actionable interoperability improvements.</li>
+              <li>Built an embedded e-signature proof of concept to streamline patient onboarding; a Node.js/Express + Axios backend integrated with the SignWell API.</li>
             </ul>
-            <div class="tags"><span>Skill</span><span>Tool</span></div>
+            <div class="tags"><span>JavaScript</span><span>Node.js</span><span>Express</span><span>FHIR</span><span>OAuth2</span></div>
           </div>
         </article>
 
         <article class="xp reveal">
-          <div class="xp-when mono">20XX – 20XX</div>
+          <div class="xp-when mono">Jan – Jun 2025</div>
           <div class="xp-body">
-            <h3>Role / Title</h3>
-            <div class="xp-org">Company or Organization · Location</div>
+            <h3>Software Engineer</h3>
+            <div class="xp-org">Cloudidr · Berkeley, CA · Part-time</div>
             <ul>
-              <li>What you worked on and the impact it had.</li>
-              <li>A tool you built, a problem you solved, or a result you drove.</li>
+              <li>Generated synthetic data using CTGAN—customer instances with realistically distributed variables such as CPU usage, memory usage, and related cloud workload metrics.</li>
+              <li>Used Google Cloud Platform to extract 400,000+ rows of cloud computing data to train a CTGAN model for synthetic data creation.</li>
+              <li>Conducted literature review on synthetic data generation, ML workload prediction models, the MIT SuperCloud dataset, and the CTGAN paper.</li>
             </ul>
-            <div class="tags"><span>Skill</span><span>Tool</span></div>
+            <div class="tags"><span>Python</span><span>CTGAN</span><span>GCP</span><span>Machine Learning</span></div>
+          </div>
+        </article>
+
+        <article class="xp reveal">
+          <div class="xp-when mono">Mar 2023 – Jul 2024</div>
+          <div class="xp-body">
+            <h3>Product Management Intern</h3>
+            <div class="xp-org">Virtual Medical Missions · Eastvale, CA</div>
+            <ul>
+              <li>Helped co-found a non-profit with Dr. French and Ms. Peraino to bring medical access to rural villages in Godo, Kenya.</li>
+              <li>Led the engineering team in creating a cost-effective vitals collection device measuring heart rate, oxygen levels, and related metrics.</li>
+              <li>Developed a clinical web app that captures patient vitals, signs, and symptoms and generates a rule-based differential diagnosis for clinicians.</li>
+              <li>Presented to former CNUSD Superintendent Dr. Buenrostro and CNUSD Board Members.</li>
+            </ul>
+            <div class="tags"><span>Product</span><span>Healthcare</span><span>Hardware</span><span>Web App</span></div>
           </div>
         </article>
       </div>
@@ -870,7 +983,7 @@ footer .fine{ margin-top:40px; }
 
             <figure class="rec-card">
               <blockquote class="rec-quote">
-                <p>You started in a  new position and grew to mentor other aspiring leaders with 
+                <p>...You started in a new position and grew to mentor other aspiring leaders with 
                   patience, positivity, understanding, dedication, grace, intentionality - and ALWAYS a good sense of humor.</p>
               </blockquote>
               <figcaption class="rec-meta">
@@ -886,7 +999,8 @@ footer .fine{ margin-top:40px; }
               <blockquote class="rec-quote">
                 <p> ...Nil was one of the few students I could consistently count on to think ahead, 
                   problem solve, and develop detailed and creative solutions for our events. 
-                  He communicates well with his peers and supervisors and isn’t afraid to come up with and try new ideas...</p>
+                  He communicates well with his peers and supervisors and isn’t afraid to come up with and try new ideas. 
+                  He will be an excellent asset to any organization.</p>
               </blockquote>
               <figcaption class="rec-meta">
                 <div class="who">
@@ -992,8 +1106,8 @@ footer .fine{ margin-top:40px; }
       <h2>Let's build something</h2>
       <p class="section-sub">Open to internships, collaborations, and interesting problems.</p>
       <!-- EDIT ME -->
-      <a class="email" href="mailto:you@email.com">you@email.com</a>
-      <p class="fine mono">© <span id="year"></span> Your Name · Built by hand, raced on GitHub Pages</p>
+      <a class="email" href="mailto:you@email.com">nil_patel@berkeley.edu</a>
+      <p class="fine mono">© <span id="year"></span> Nil Patel · Built by hand, raced on GitHub Pages</p>
     </footer>
 
   </div><!-- /wrap -->
@@ -1258,6 +1372,144 @@ footer .fine{ margin-top:40px; }
     go(0);
   })();
 
+  /* ---------- photo carousel (image tiles under the intro) ---------- */
+  (function initGallery(){
+    var track = document.getElementById('gallery-track');
+    if (!track) return;
+    var root     = track.closest('.gallery');
+    var tiles    = Array.prototype.slice.call(track.children);
+    var total    = tiles.length;
+    var index    = 0;            // current page index
+    var prevBtn  = document.getElementById('gallery-prev');
+    var nextBtn  = document.getElementById('gallery-next');
+    var dotsWrap = document.getElementById('gallery-dots');
+    var countEl  = document.getElementById('gallery-count');
+    var vp       = document.getElementById('gallery-vp');
+    if (total === 0) return;
+
+    function perView(){
+      var v = parseInt(getComputedStyle(root).getPropertyValue('--per'), 10);
+      return (v && v > 0) ? v : 1;
+    }
+    function pageCount(){ return Math.max(1, Math.ceil(total / perView())); }
+    function pad(n){ return String(n).length < 2 ? '0' + n : '' + n; }
+
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      var pages = pageCount();
+      for (var i = 0; i < pages; i++){
+        var dot = document.createElement('button');
+        dot.className = 'recs-dot' + (i === index ? ' active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Go to photo page ' + (i + 1));
+        (function(n){ dot.addEventListener('click', function(){ manualGo(n); }); })(i);
+        dotsWrap.appendChild(dot);
+      }
+    }
+
+    function go(n){
+      var pages = pageCount();
+      index = (n % pages + pages) % pages;   // wrap around at both ends
+      /* align to the exact x of the page's first tile so the inter-tile gaps
+         don't accumulate and clip the last image on later pages */
+      var first = tiles[Math.min(index * perView(), total - 1)];
+      var offset = first ? first.offsetLeft : 0;
+      track.style.transform = 'translateX(' + (-offset) + 'px)';
+      var dots = dotsWrap.children;
+      for (var i = 0; i < dots.length; i++){
+        dots[i].classList.toggle('active', i === index);
+      }
+      if (countEl) countEl.textContent = pad(index + 1) + ' / ' + pad(pages);
+    }
+
+    /* autoplay: advance pages on a timer, looping back to the start */
+    var AUTO_MS   = 4500;
+    var autoTimer = null;
+    function autoOn(){
+      if (reduced || autoTimer || pageCount() < 2) return;
+      autoTimer = setInterval(function(){ go(index + 1); }, AUTO_MS);
+    }
+    function autoOff(){
+      if (autoTimer){ clearInterval(autoTimer); autoTimer = null; }
+    }
+    function autoReset(){ autoOff(); autoOn(); }   // after a manual move, wait a full beat
+
+    /* a manual move = jump there, then restart the timer */
+    function manualGo(n){ go(n); autoReset(); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function(){ manualGo(index - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ manualGo(index + 1); });
+
+    /* arrow keys when the carousel has focus */
+    if (vp) vp.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowLeft'){ e.preventDefault(); manualGo(index - 1); }
+      else if (e.key === 'ArrowRight'){ e.preventDefault(); manualGo(index + 1); }
+    });
+
+    /* swipe (touch / pointer) */
+    var startX = null;
+    if (vp){
+      vp.addEventListener('pointerdown', function(e){ startX = e.clientX; });
+      window.addEventListener('pointerup', function(e){
+        if (startX === null) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 40) manualGo(dx < 0 ? index + 1 : index - 1);
+        startX = null;
+      });
+    }
+
+    /* pause on hover / focus, and while the tab is hidden */
+    if (root){
+      root.addEventListener('mouseenter', autoOff);
+      root.addEventListener('mouseleave', autoOn);
+      root.addEventListener('focusin',  autoOff);
+      root.addEventListener('focusout', autoOn);
+    }
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) autoOff(); else autoOn();
+    });
+
+    /* re-page on resize: per-view changes, so rebuild dots and clamp index */
+    var galResize;
+    window.addEventListener('resize', function(){
+      clearTimeout(galResize);
+      galResize = setTimeout(function(){
+        var pages = pageCount();
+        if (index >= pages) index = pages - 1;
+        buildDots();
+        go(index);
+      }, 120);
+    });
+
+    /* fly-in: each tile rises into place with the same reveal + stagger */
+    tiles.forEach(function(tile, i){
+      tile.classList.add('reveal');
+      tile.style.setProperty('--d', ((i % 3) * 0.09).toFixed(2) + 's');
+    });
+    function revealTiles(){ tiles.forEach(function(t){ t.classList.add('in'); }); }
+
+    if (!reduced && 'IntersectionObserver' in window){
+      var galIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ revealTiles(); galIO.disconnect(); }
+        });
+      }, { threshold: 0.12 });
+      if (vp) galIO.observe(vp);
+
+      /* only autoplay while the carousel is on screen */
+      var playIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ e.isIntersecting ? autoOn() : autoOff(); });
+      }, { threshold: 0.3 });
+      if (vp) playIO.observe(vp);
+    } else {
+      revealTiles();
+    }
+
+    buildDots();
+    go(0);
+    autoOn();
+  })();
+
   /* ---------- finish-line celebration ---------- */
   var celebrated = false;
   var stage = document.getElementById('celebration');
@@ -1351,7 +1603,7 @@ footer .fine{ margin-top:40px; }
   /* ---------- 3D tilt on cards (fine pointers only) ---------- */
   var finePointer = window.matchMedia('(pointer:fine)').matches;
   if (!reduced && finePointer){
-    document.querySelectorAll('.card, .xp-body, .recs-viewport').forEach(function(el){
+    document.querySelectorAll('.card, .xp-body, .recs-viewport, .gallery-tile').forEach(function(el){
       el.classList.add('tiltable');
       if (el.parentElement) el.parentElement.classList.add('tilt-wrap');
       var tiltRaf = null;
