@@ -235,10 +235,24 @@ h2{
   transform:translateY(-3px);
   border-color:var(--ink);
 }
+.card-meta{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px;
+}
 .card .num{
   font-family:'IBM Plex Mono', monospace;
   font-size:10px; letter-spacing:.16em;
   color:var(--accent);
+}
+.card .status{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid var(--accent);
+  border-radius:4px;
+  padding:3px 7px;
+  white-space:nowrap;
 }
 .card h3{
   font-weight:700;
@@ -938,6 +952,17 @@ footer .fine{ margin-top:40px; }
           <p>Pantry-first meal planning web app that cooks with what you already have, respects dietary preferences and macro targets, and uses a multi-agent AI pipeline to propose practical, nutritionally aligned recipes.</p>
           <div class="tags"><span>Next.js</span><span>FastAPI</span><span>TypeScript</span><span>Supabase</span><span>AI Agents</span></div>
           <a class="link" href="https://github.com/KrithinKamineni/Glean" target="_blank" rel="noopener">View project →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-meta">
+            <span class="num">SW / 05</span>
+            <span class="status">In progress</span>
+          </div>
+          <h3>Schwab Trader</h3>
+          <p>Block-style trading platform that lets you make custom trades directly from your Schwab account. Using Schwab’s API, it runs locally on Mac to place trades you customize using blocks.</p>
+          <div class="tags"><span>Python</span><span>Schwab API</span><span>macOS</span></div>
+          <a class="link" href="https://github.com/nilpatel-ucb/schwab-trader" target="_blank" rel="noopener">View project →</a>
         </article>
       </div>
     </section>
